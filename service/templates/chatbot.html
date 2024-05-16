@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+#textInput {
+    border: 2px solid #000080;
+    border-bottom: 3px solid #008080;
+}
+.messages .message.left .avatar {
+  float: left;
+  width: 50px;
+  height: 50px;
+  background-image: url("static/hacker1.png");
+  background-size: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.userText {
+    color: #000080;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    text-align: right;
+    line-height: 25px;
+}
+.userText span {
+    background-color: #c0c0c0;
+    padding: 8px;
+    border-radius: 3px;
+}
+.botText {
+    color: #000080;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 15px;
+    text-align: left;
+    line-height: 25px;
+}
+.botText span {
+    background-color: #808080;
+    padding: 8px;
+    border-radius: 3px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #c0c0c0;
+  font-family: 'Courier New', Courier, monospace;
+}
+.chat_window {
+  position: absolute;
+  width: calc(100% - 20px);
+  max-width: 800px;
+  height: 500px;
+  border: 2px solid #000080;
+  background-color: #ffffff;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  overflow: hidden;
+}
+
+.top_menu {
+  background-color: #000080;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+}
+.top_menu .title {
+  font-size: 18px;
+}
+.top_menu .icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: url('static/hacker.png') no-repeat center center;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.messages {
+  list-style: none;
+  padding: 10px;
+  height: 347px;
+  overflow: scroll;
+  background-color: #ffffff;
+}
+.messages .message {
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 10px;
+  transition: all 0.5s linear;
+  opacity: 0;
+}
+.messages .message.left .avatar {
+  float: left;
+  width: 40px;
+  height: 40px;
+  background-color: #808080;
+  margin-right: 10px;
+}
+.messages .message.left .text_wrapper {
+  background-color: #f0f0f0;
+  margin-left: 50px;
+}
+.messages .message.left .text_wrapper::after, .messages .message.left .text_wrapper::before {
+  right: 100%;
+  border-right-color: #f0f0f0;
+}
+.messages .message.left .text {
+  color: #000080;
+}
+.messages .message.right .text_wrapper {
+  background-color: #e0e0e0;
+  margin-right: 50px;
+  float: right;
+}
+.messages .message.right .text_wrapper::after, .messages .message.right .text_wrapper::before {
+  left: 100%;
+  border-left-color: #e0e0e0;
+}
+.messages .message.right .text {
+  color: #000080;
+}
+.messages .message.appeared {
+  opacity: 1;
+}
+.messages .message .avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #808080;
+  display: inline-block;
+}
+.messages .message .text_wrapper {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 3px;
+  width: calc(100% - 60px);
+  min-width: 100px;
+  position: relative;
+}
+.messages .message .text_wrapper::after, .messages .message .text_wrapper:before {
+  top: 10px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.messages .message .text_wrapper::after {
+  border-width: 10px;
+  margin-top: 0px;
+}
+.messages .message .text_wrapper::before {
+  border-width: 12px;
+  margin-top: -2px;
+}
+.messages .message .text_wrapper .text {
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.bottom_wrapper {
+  width: 100%;
+  background-color: #c0c0c0;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  border-top: 2px solid #000080;
+}
+.bottom_wrapper .message_input_wrapper {
+  display: inline-block;
+  height: 40px;
+  border: 1px solid #000080;
+  width: calc(100% - 120px);
+  background-color: #ffffff;
+  padding: 0 10px;
+}
+.bottom_wrapper .message_input_wrapper .message_input {
+  border: none;
+  height: 100%;
+  width: calc(100% - 20px);
+  outline: none;
+  color: #000080;
+  background-color: #ffffff;
+}
+.bottom_wrapper .send_message {
+  width: 100px;
+  height: 40px;
+  display: inline-block;
+  background-color: #000080;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  float: right;
+  line-height: 40px;
+  border-radius: 3px;
+}
+
+.message_template {
+  display: none;
+}
+
+.footer {
+  position: fixed;
+  width: 100%;
+  height: 2em;
+  overflow: hidden;
+  background: #4e919c;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  transition: all 1s ease;
+}
+.footer:hover {
+  height: 10em;
+}
+.footer #button {
+  width: 55px;
+  height: 55px;
+  border: #4e919c 12px solid;
+  border-radius: 35px;
+  margin: 0 auto;
+  position: relative;
+  transition: all 1s ease;
+}
+.footer #button:hover {
+  border: #3A3A3A 12px solid;
+  transition: all 1s ease;
+}
+.footer_center {
+  width: 500px;
+  float: left;
+  text-align: center;
+}
+.footer h2 {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
+  margin: 50px 0 0 10px;
+}
+.footer a {
+  color: white;
+}
+.footer a:hover {
+  text-decoration: none;
+}
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="container" style="border: 2px solid #000080; padding: 10px; background-color: #c0c0c0; margin: auto;">
+    <p style="font-family: 'Courier New', Courier, monospace; color: #000080; font-size: 18px; text-align:center">
+	  <large> An intentionally vulnerable AI chatbot to learn and practice AI Security.
+    </large></p>
+</div>
+<div class="chat_window">
+    <div class="top_menu">
+        <div class="icon"></div>
+        <div class="title">Mission Company AI Assistant</div>
+    </div>
+    <ul class="messages"></ul>
+    <div class="bottom_wrapper clearfix">
+        <div class="message_input_wrapper">
+            <input class="message_input" placeholder="request.." />
+        </div>
+        <div class="send_message">Send</div>
+    </div>
+    <div class="message_template">
+        <li class="message">
+            <div class="avatar"></div>
+            <div class="text_wrapper">
+                <div class="text"></div>
+            </div>
+        </li>
+    </div>
+</div>
+<div class="footer">
+  <div id="button"></div>
+  <div class="footer_center">
+       <h2>LLM Course <a href="https://github.com/KoreaSecurity">Sang-Hoon Choi</a></h2>
+  </div>
+</div>
+
+<script>
+    (function () {
+    var Message;
+    Message = function (arg) {
+        this.text = arg.text, this.message_side = arg.message_side;
+        this.draw = function (_this) {
+            return function () {
+                var $message;
+                $message = $($('.message_template').clone().html());
+                $message.addClass(_this.message_side).find('.text').html(_this.text);
+                $('.messages').append($message);
+                return setTimeout(function () {
+                    return $message.addClass('appeared');
+                }, 0);
+            };
+        }(this);
+        return this;
+    };
+    $(function () {
+        var getMessageText, message_side, sendMessage;
+        message_side = 'right';
+        getMessageText = function () {
+            var $message_input;
+            $message_input = $('.message_input');
+            return $message_input.val();
+        };
+
+        sendMessage = function (text) {
+            var $messages, message;
+            if (text.trim() === '') {
+                return;
+            }
+            $('.message_input').val('');
+            $messages = $('.messages');
+            var message_side = 'right';
+            message = new Message({
+                text: text,
+                message_side: message_side
+            });
+
+            message.draw();
+
+            $.get("/get", { msg: text }).done(function(data) {
+                var botMessage = new Message({
+                    text: data,
+                    message_side: 'left'
+                });
+
+                botMessage.draw();
+                $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+            });
+
+            return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+        };
+
+        $('.send_message').click(function (e) {
+            return sendMessage(getMessageText());
+        });
+        $('.message_input').keyup(function (e) {
+            if (e.which === 13) {
+                return sendMessage(getMessageText());
+            }
+        });
+
+        writingMessage = new Message({
+            text: "Hello, I'm Thom, designed for educational purposes to practice LLM security. I was created by SangHoon-Choi. I am your assistant. How can I help you?",
+            message_side: 'left'
+        });
+        writingMessage.draw();
+    });
+}.call(this));
+</script>
+</body>
+</html>

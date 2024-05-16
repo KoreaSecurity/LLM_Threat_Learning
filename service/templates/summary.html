@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        #textInput {
+            border: 2px solid black;
+            border-bottom: 3px solid #00bfff;
+        }
+
+        .userText, .botText {
+            font-family: Tahoma, sans-serif;
+            font-size: 13px;
+            line-height: 20px;
+        }
+
+        .userText {
+            text-align: right;
+        }
+
+        .userText span {
+            background-color: #c0c0c0;
+            padding: 5px;
+            border: 1px solid #a0a0a0;
+        }
+
+        .botText {
+            text-align: left;
+        }
+
+        .botText span {
+            background-color: #e0e0e0;
+            padding: 5px;
+            border: 1px solid #a0a0a0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #008080;
+            font-family: Tahoma, sans-serif;
+            color: black;
+        }
+
+        .chat_window {
+            position: absolute;
+            width: calc(100% - 40px);
+            max-width: 640px;
+            height: 480px;
+            border: 2px solid #000080;
+            background-color: #c0c0c0;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        .top_menu {
+            background-color: #000080;
+            width: 100%;
+            padding: 2px 0;
+            color: white;
+            font-weight: bold;
+        }
+
+        .messages {
+            list-style: none;
+            padding: 10px;
+            margin: 0;
+            height: 350px;
+            overflow-y: scroll;
+            background-color: #ffffff;
+        }
+    .messages .message.left .avatar {
+  float: left;
+  width: 50px;
+  height: 50px;
+  background-image: url("static/hacker2.png");
+  background-size: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+        .messages .message {
+            clear: both;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .messages .message.left .text_wrapper {
+            background-color: #dcdcdc;
+            border: 1px solid #a0a0a0;
+            margin-left: 10px;
+            padding: 5px;
+        }
+
+        .messages .message.right .text_wrapper {
+            background-color: #f5f5f5;
+            border: 1px solid #a0a0a0;
+            margin-right: 10px;
+            padding: 5px;
+            float: right;
+        }
+
+        .bottom_wrapper {
+            width: 100%;
+            background-color: #c0c0c0;
+            padding: 5px;
+            border-top: 2px solid #000080;
+        }
+
+        .message_input_wrapper {
+            display: inline-block;
+            width: calc(100% - 120px);
+        }
+
+        .message_input_wrapper .message_input {
+            border: 1px solid #a0a0a0;
+            width: 100%;
+            padding: 5px;
+        }
+
+        .send_message {
+            width: 100px;
+            display: inline-block;
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .send_message:hover {
+            background-color: #0000ff;
+        }
+
+        .message_template {
+            display: none;
+        }
+
+        .footer {
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            width: 100%;
+            background: #6a5dcb;
+            color: white;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .footer a {
+            color: white;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container" style="border: 2px solid black; border-radius: 10px; padding: 10px; background-color: #c0c0c0; margin: auto;">
+        <p style="font-family: Tahoma; color: black; font-size: 18px; text-align:center">
+            <large>Understanding the Vulnerabilities of LLM Services</large>
+        </p>
+    </div>
+    <div class="chat_window">
+        <div class="top_menu">
+            <div class="title">Website Summarizer</div>
+        </div>
+        <ul class="messages"></ul>
+        <div class="bottom_wrapper clearfix">
+            <div class="message_input_wrapper">
+                <input class="message_input" placeholder="Enter your website link..." />
+            </div>
+            <div class="send_message">
+                <div class="text">Send</div>
+            </div>
+        </div>
+        <div class="message_template">
+            <li class="message">
+                <div class="text_wrapper">
+                    <div class="text"></div>
+                </div>
+            </li>
+        </div>
+    </div>
+    <div class="footer">
+        <h2>LLM Course <a href="https://github.com/KoreaSecurity">Sang-Hoon Choi</a></h2>
+    </div>
+    <script>
+        (function () {
+            var Message = function (arg) {
+                this.text = arg.text;
+                this.message_side = arg.message_side;
+                this.draw = function (_this) {
+                    return function () {
+                        var $message = $($('.message_template').clone().html());
+                        $message.addClass(_this.message_side).find('.text').html(_this.text);
+                        $('.messages').append($message);
+                        return setTimeout(function () {
+                            return $message.addClass('appeared');
+                        }, 0);
+                    };
+                }(this);
+                return this;
+            };
+
+            $(function () {
+                var getMessageText = function () {
+                    return $('.message_input').val();
+                };
+
+                var sendMessage = function (text) {
+                    if (text.trim() === '') {
+                        return;
+                    }
+                    $('.message_input').val('');
+                    var $messages = $('.messages');
+                    var message_side = 'right';
+                    var message = new Message({ text: text, message_side: message_side });
+                    message.draw();
+                    $.get("/get", { msg: text }).done(function (data) {
+                        var botMessage = new Message({ text: data, message_side: 'left' });
+                        botMessage.draw();
+                        $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+                    });
+                    return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+                };
+
+                $('.send_message').click(function () {
+                    return sendMessage(getMessageText());
+                });
+
+                $('.message_input').keyup(function (e) {
+                    if (e.which === 13) {
+                        return sendMessage(getMessageText());
+                    }
+                });
+            });
+        }).call(this);
+    </script>
+</body>
+</html>
