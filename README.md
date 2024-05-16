@@ -1,4 +1,5 @@
-![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/82c524c6-0f5e-4067-9baa-e653c41e824d)
+![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/2386fbda-1c37-4dec-a2b7-00ffce7cbd21)
+
 # Project for Practicing LLM Security
 
 Language models (LLMs, Large Language Models) are exposed to various security threats due to their nature and usage. These threats can vary depending on the vulnerabilities within the model itself and the environment in which it operates. Here are some major security threats:
