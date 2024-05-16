@@ -1,4 +1,4 @@
-<img src="https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/3bb09293-f197-45e2-8937-5bdb6750cd43" alt="image" width="800px">
+<img src="https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/3bb09293-f197-45e2-8937-5bdb6750cd43" alt="image" width="300px">
 
 
 ![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/2386fbda-1c37-4dec-a2b7-00ffce7cbd21)
