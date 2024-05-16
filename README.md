@@ -6,6 +6,7 @@
 sudo docker build -t llm .
 sudo docker run -e OPENAI_API_KEY=your_api_key -p 5000:5000 -p 9089:9089 llm
 
+```
 
 # Project for Practicing LLM Security
 
