@@ -1,5 +1,12 @@
 ![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/2386fbda-1c37-4dec-a2b7-00ffce7cbd21)
 
+## Usage
+
+```sh
+sudo docker build -t llm .
+sudo docker run -e OPENAI_API_KEY=your_api_key -p 5000:5000 -p 9089:9089 llm
+
+
 # Project for Practicing LLM Security
 
 Language models (LLMs, Large Language Models) are exposed to various security threats due to their nature and usage. These threats can vary depending on the vulnerabilities within the model itself and the environment in which it operates. Here are some major security threats:
