@@ -1,3 +1,5 @@
+![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/862ac7f7-0985-4c29-81dc-e99564cd74d4)
+
 ![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/2386fbda-1c37-4dec-a2b7-00ffce7cbd21)
 
 ## Usage
