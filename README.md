@@ -1,6 +1,6 @@
 ![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/862ac7f7-0985-4c29-81dc-e99564cd74d4)
 
-![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/2386fbda-1c37-4dec-a2b7-00ffce7cbd21)
+
 
 ## Usage
 
@@ -9,6 +9,9 @@ sudo docker build -t llm .
 sudo docker run -e OPENAI_API_KEY=your_api_key -p 5000:5000 -p 9089:9089 llm
 
 ```
+
+![image](https://github.com/KoreaSecurity/LLM_Threat_Learning/assets/8425791/2386fbda-1c37-4dec-a2b7-00ffce7cbd21)
+
 
 # Project for Practicing LLM Security
 
