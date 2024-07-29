@@ -5,7 +5,6 @@ RUN apt update && apt install -y apt-transport-https
 RUN apt install -y  curl procps git gcc libomp-dev
 RUN git clone https://github.com/KoreaSecurity/LLM_Threat_Learning.git
 RUN pip3 install -r /LLM_Threat_Learning/requirements.txt
-RUN mkdir /LLM_Threat_Learning/logs
 RUN chmod -R +x /LLM_Threat_Learning/logs
 
 WORKDIR LLM_Threat_Learning
